@@ -4,3 +4,6 @@ package-lock.json
 dist/
 *.DS_Store
 _scripts_commands.md
+*.log
+*.env
+.env
