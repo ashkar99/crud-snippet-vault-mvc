@@ -3,6 +3,7 @@ import session from 'express-session'
 import flash from 'connect-flash'
 import dotenv from 'dotenv'
 import { connectDB } from './config/mongoose.js'
+import { router } from './routes/router.js'
 
 // Initialize Dotenv
 dotenv.config()
@@ -13,6 +14,7 @@ connectDB()
 const app = express()
 
 // Core Middleware
+app.use('/', router)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
