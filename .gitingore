@@ -1,0 +1,6 @@
+build/
+node_modules/
+package-lock.json
+dist/
+*.DS_Store
+_scripts_commands.md
