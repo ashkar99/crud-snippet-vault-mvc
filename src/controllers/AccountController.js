@@ -12,7 +12,7 @@ export class AccountController {
     res.render('account/register')
   }
 
-  async registerPost(req, res, next) {
+  async registerPost (req, res, next) {
     try {
       const { username, password } = req.body
 
@@ -22,16 +22,15 @@ export class AccountController {
       })
 
       await user.save()
-      next()
 
+      req.session.flash = { type: 'success', text: 'Registration successful. Please login.' }
+      res.redirect('/login')
     } catch (error) {
-      // 11000 is the MongoDB error code for duplicate keys (unique constraint)
       if (error.code === 11000) {
         req.session.flash = { type: 'danger', text: 'Username is already taken.' }
         return res.redirect('./register')
       }
-
-      // Handle Mongoose validation errors
+      
       if (error.name === 'ValidationError') {
         req.session.flash = { type: 'danger', text: error.message }
         return res.redirect('./register')
