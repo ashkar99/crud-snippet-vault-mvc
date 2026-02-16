@@ -11,4 +11,24 @@ export class AccountController {
   async register (req, res, next) {
     res.render('account/register')
   }
+
+  /**
+   * Processes the registration form.
+   */
+  async registerPost (req, res, next) {
+    try {
+      const { username, password } = req.body
+
+      const user = new User({
+        username: username,
+        password: password
+      })
+
+      await user.save()
+
+      res.redirect('/login')
+    } catch (error) {
+      next(error)
+    }
+  }
 }
