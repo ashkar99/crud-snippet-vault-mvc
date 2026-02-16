@@ -16,7 +16,12 @@ const snippetSchema = new mongoose.Schema({
   content: {
     type: String,
     required: [true, 'Content is required.'],
-    minlength: [1, 'Snippet cannot be empty.'],
+    minlength: [1, 'Snippet cannot be empty.']
+  },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'Snippet must have an author.']
   }
 }, {
   timestamps: true,
