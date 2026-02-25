@@ -42,4 +42,15 @@ export class SnippetController {
       next(error)
     }
   }
+
+  /**
+   * Renders the form to create a new snippet.
+   */
+  async create (req, res, next) {
+    try {
+      res.render('snippets/create')
+    } catch (error) {
+      next(error)
+    }
+  }
 }
