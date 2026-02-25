@@ -55,13 +55,12 @@ export class SnippetController {
   }
 
   /**
-   * Processes the snippet creation form.
+   * Processes the snippet creation form (Hardened with PRG and Flash).
    */
   async createPost (req, res, next) {
     try {
       const { title, content } = req.body
 
-      // Create the snippet, securely attaching the session user's ID as the author
       const snippet = new Snippet({
         title: title,
         content: content,
@@ -70,9 +69,15 @@ export class SnippetController {
 
       await snippet.save()
 
-      // Redirect to the newly created snippet (PRG Pattern)
-      res.redirect('.')
+      // Flash success and redirect to the public feed
+      req.session.flash = { type: 'success', text: 'Snippet successfully created!' }
+      res.redirect('/snippets') 
+
     } catch (error) {
+      if (error.name === 'ValidationError') {
+        req.session.flash = { type: 'danger', text: error.message }
+        return res.redirect('./create')
+      }
       next(error)
     }
   }
