@@ -45,14 +45,24 @@ app.use(flash())
 app.use((req, res, next) => {
   res.locals.success_message = req.flash('success')
   res.locals.error_message = req.flash('error')
-  
+
+  // Preliminary Error Handler
+  app.use((err, req, res, next) => {
+    if (err.status === 403) {
+      return res.status(403).send('403 Forbidden: You must be logged in to view this resource.')
+    }
+
+    // Pass other errors down the chain
+    res.status(err.status || 500).send(err.message || 'Internal Server Error')
+  })
+
   // Make the session user available to all views
   if (req.session.user) {
-      res.locals.user = req.session.user
+    res.locals.user = req.session.user
   } else {
-      res.locals.user = null
+    res.locals.user = null
   }
-  
+
   next()
 })
 
