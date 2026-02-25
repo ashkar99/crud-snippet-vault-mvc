@@ -22,11 +22,15 @@ export const connectDB = async () => {
     mongoose.connection.on('disconnected', () => console.log('Mongoose connection is disconnected.'))
 
     // Handle application termination
-    process.on('SIGINT', () => {
-      mongoose.connection.close(() => {
+    process.on('SIGINT', async () => {
+      try {
+        await mongoose.connection.close()
         console.log('Mongoose connection disconnected due to application termination.')
         process.exit(0)
-      })
+      } catch (err) {
+        console.error('Error closing Mongoose connection:', err)
+        process.exit(1)
+      }
     })
 
     return await mongoose.connect(CONNECTION_STRING)
