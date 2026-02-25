@@ -53,4 +53,27 @@ export class SnippetController {
       next(error)
     }
   }
+
+  /**
+   * Processes the snippet creation form.
+   */
+  async createPost (req, res, next) {
+    try {
+      const { title, content } = req.body
+
+      // Create the snippet, securely attaching the session user's ID as the author
+      const snippet = new Snippet({
+        title: title,
+        content: content,
+        author: req.session.user._id
+      })
+
+      await snippet.save()
+
+      // Redirect to the newly created snippet (PRG Pattern)
+      res.redirect('.')
+    } catch (error) {
+      next(error)
+    }
+  }
 }

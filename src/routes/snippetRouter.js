@@ -11,6 +11,6 @@ const controller = new SnippetController()
 router.get('/', (req, res, next) => controller.index(req, res, next))
 
 router.get('/create', authorizeLoggedOn, (req, res, next) => controller.create(req, res, next))
-router.post('/create', authorizeLoggedOn, (req, res) => res.send('Snippet Created'))
+router.post('/create', authorizeLoggedOn, (req, res, next) => controller.createPost(req, res, next))
 
 router.get('/:id', (req, res, next) => controller.show(req, res, next))
