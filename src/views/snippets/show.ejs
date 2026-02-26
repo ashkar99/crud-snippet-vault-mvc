@@ -10,7 +10,14 @@
     <div class="card-body">
         <div class="snippet-content"><%= viewData.snippet.content %></div>
     </div>
-    <div class="card-footer text-muted text-end">
-        <small>Created: <%= new Date(viewData.snippet.createdAt).toLocaleString() %></small>
+    <div class="card-footer d-flex justify-content-between align-items-center bg-white">
+        <small class="text-muted">Created: <%= new Date(viewData.snippet.createdAt).toLocaleString() %></small>
+        
+        <% if (locals.user && locals.user._id === viewData.snippet.author._id.toString()) { %>
+            <div>
+                <a href="/snippets/<%= viewData.snippet._id %>/update" class="btn btn-warning btn-sm me-2">Edit</a>
+                <a href="/snippets/<%= viewData.snippet._id %>/delete" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+        <% } %>
     </div>
 </div>
