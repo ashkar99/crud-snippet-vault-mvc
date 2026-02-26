@@ -1,3 +1,4 @@
+import { Snippet } from '../models/Snippet.js'
 /**
  * Authorization Middleware
  * Verifies if a user has an active, authenticated session.
@@ -13,4 +14,32 @@ export const authorizeLoggedOn = (req, res, next) => {
   
   // User is authenticated, proceed to the next middleware/controller
   next()
+}
+
+/**
+ * Ownership Middleware
+ * Verifies if the logged-in user is the actual creator of the snippet.
+ */
+export const authorizeOwnership = async (req, res, next) => {
+  try {
+    const snippet = await Snippet.findById(req.params.id)
+
+    // Check if snippet exists
+    if (!snippet) {
+      const error = new Error('The snippet you requested does not exist.')
+      error.status = 404
+      return next(error)
+    }
+
+    // Check Ownership
+    if (snippet.author.toString() !== req.session.user._id) {
+      const error = new Error('403 Forbidden: You do not own this snippet.')
+      error.status = 403
+      return next(error)
+    }
+    req.snippetDoc = snippet
+    next()
+  } catch (error) {
+    next(error)
+  }
 }
