@@ -1,0 +1,20 @@
+<% if (locals.success_message && locals.success_message.length > 0) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= success_message %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
+<% if (locals.error_message && locals.error_message.length > 0) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= error_message %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
+<% if (locals.flash) { %>
+    <div class="alert alert-<%= flash.type %> alert-dismissible fade show" role="alert">
+        <%= flash.text %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
