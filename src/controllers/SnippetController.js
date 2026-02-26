@@ -81,4 +81,56 @@ export class SnippetController {
       next(error)
     }
   }
+
+  async update (req, res, next) {
+    try {
+      // Document is already loaded and authorized by middleware!
+      const viewData = { snippet: req.snippetDoc.toObject() }
+      res.render('snippets/update', { viewData })
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async updatePost (req, res, next) {
+    try {
+      req.snippetDoc.title = req.body.title
+      req.snippetDoc.content = req.body.content
+
+      // Only save if modified
+      if (req.snippetDoc.isModified()) {
+        await req.snippetDoc.save()
+        req.session.flash = { type: 'success', text: 'Snippet updated successfully!' }
+      } else {
+        req.session.flash = { type: 'info', text: 'No changes were made.' }
+      }
+
+      res.redirect(`/snippets/${req.snippetDoc._id}`)
+    } catch (error) {
+      if (error.name === 'ValidationError') {
+        req.session.flash = { type: 'danger', text: error.message }
+        return res.redirect(`./update`)
+      }
+      next(error)
+    }
+  }
+
+  async delete (req, res, next) {
+    try {
+      const viewData = { snippet: req.snippetDoc.toObject() }
+      res.render('snippets/delete', { viewData })
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async deletePost (req, res, next) {
+    try {
+      await req.snippetDoc.deleteOne()
+      req.session.flash = { type: 'success', text: 'Snippet was permanently deleted.' }
+      res.redirect('/snippets')
+    } catch (error) {
+      next(error)
+    }
+  }
 }
