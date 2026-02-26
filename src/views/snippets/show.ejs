@@ -11,7 +11,12 @@
         <div class="snippet-content"><%= viewData.snippet.content %></div>
     </div>
     <div class="card-footer d-flex justify-content-between align-items-center bg-white">
-        <small class="text-muted">Created: <%= new Date(viewData.snippet.createdAt).toLocaleString() %></small>
+        <div>
+            <small class="text-muted d-block">Created: <%= new Date(viewData.snippet.createdAt).toLocaleString() %></small>
+            <% if (String(viewData.snippet.createdAt) !== String(viewData.snippet.updatedAt)) { %>
+                <small class="text-muted d-block">Updated: <%= new Date(viewData.snippet.updatedAt).toLocaleString() %></small>
+            <% } %>
+        </div>
         
         <% if (locals.user && locals.user._id === viewData.snippet.author._id.toString()) { %>
             <div>
