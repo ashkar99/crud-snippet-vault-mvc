@@ -1,0 +1,20 @@
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm mt-4 border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Confirm Deletion</h4>
+            </div>
+            <div class="card-body text-center">
+                <p class="fs-5">Are you sure you want to permanently delete the snippet:</p>
+                <p class="fw-bold fs-4 text-danger">"<%= viewData.snippet.title %>"?</p>
+                <p class="text-muted">This action cannot be undone.</p>
+            </div>
+            <div class="card-footer d-flex justify-content-between bg-white">
+                <a href="/snippets/<%= viewData.snippet._id %>" class="btn btn-outline-secondary">Cancel</a>
+                <form action="/snippets/<%= viewData.snippet._id %>/delete" method="POST">
+                    <button type="submit" class="btn btn-danger">Yes, Delete It</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
