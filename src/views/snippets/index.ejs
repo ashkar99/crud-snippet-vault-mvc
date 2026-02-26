@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Public Snippet Feed</h2>
+    <% if (locals.user) { %>
+        <a href="/snippets/create" class="btn btn-primary">+ Create Snippet</a>
+    <% } %>
+</div>
+
+<% if (viewData.snippets.length === 0) { %>
+    <div class="alert alert-info">No snippets found. Be the first to create one!</div>
+<% } else { %>
+    <div class="row">
+        <% viewData.snippets.forEach(snippet => { %>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <span class="fw-bold"><%= snippet.title %></span>
+                        <small class="text-muted">By <%= snippet.author.username %></small>
+                    </div>
+                    <div class="card-body">
+                        <div class="snippet-content" style="max-height: 150px; overflow: hidden;"><%= snippet.content %></div>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a href="/snippets/<%= snippet._id %>" class="btn btn-outline-primary btn-sm w-100">View Full Snippet</a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+<% } %>
