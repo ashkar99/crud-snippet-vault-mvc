@@ -1,0 +1,16 @@
+<div class="mb-3">
+    <a href="/snippets" class="text-decoration-none">← Back to Feed</a>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><%= viewData.snippet.title %></h4>
+        <small>Author: <%= viewData.snippet.author.username %></small>
+    </div>
+    <div class="card-body">
+        <div class="snippet-content"><%= viewData.snippet.content %></div>
+    </div>
+    <div class="card-footer text-muted text-end">
+        <small>Created: <%= new Date(viewData.snippet.createdAt).toLocaleString() %></small>
+    </div>
+</div>
