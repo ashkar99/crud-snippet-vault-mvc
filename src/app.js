@@ -58,12 +58,24 @@ app.use((req, res, next) => {
 
 app.use('/', router)
 
-// Error Handlers
+app.use((req, res, next) => {
+  const error = new Error('Not Found')
+  error.status = 404
+  next(error)
+})
+
 app.use((err, req, res, next) => {
-  if (err.status === 403) {
-    return res.status(403).send('403 Forbidden: You must be logged in to view this resource.')
+  const status = err.status || 500
+
+  if (status === 404) {
+    return res.status(404).render('errors/404')
   }
-  res.status(err.status || 500).send(err.message || 'Internal Server Error')
+
+  if (status === 403) {
+    return res.status(403).render('errors/403')
+  }
+
+  res.status(status).render('errors/500', { error: err })
 })
 
 const PORT = process.env.PORT || 3000
