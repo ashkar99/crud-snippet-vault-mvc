@@ -1,0 +1,15 @@
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 text-center">
+        <h1 class="display-1 fw-bold text-warning">500</h1>
+        <h2 class="mb-4">Internal Server Error</h2>
+        <p class="lead text-muted">Something went wrong on our end. The server encountered an unexpected condition.</p>
+        
+        <% if (locals.error && process.env.NODE_ENV !== 'production') { %>
+            <div class="alert alert-warning text-start mt-4 font-monospace">
+                <strong>Debug Info:</strong> <%= error.message %>
+            </div>
+        <% } %>
+        
+        <a href="/" class="btn btn-warning mt-3">Return to Home</a>
+    </div>
+</div>
