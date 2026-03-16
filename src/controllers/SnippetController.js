@@ -7,6 +7,11 @@ import { Snippet } from '../models/Snippet.js'
 export class SnippetController {
   /**
    * Displays a list of all snippets.
+   * @param {object} req - The request object.
+   * @param {object} res - The response object used to render the view.
+   * @param {string} next - The next middleware function for error handling.
+   * @returns {Promise<void>} - A promise that resolves when the operation is complete.
+   * @throws {Error} - Throws an error if there is a database error.
    */
   async index (req, res, next) {
     try {
@@ -22,11 +27,15 @@ export class SnippetController {
 
   /**
    * Displays a specific snippet.
+   * @param {object} req - The request object containing the snippet ID.
+   * @param {object} res - The response object used to render the view.
+   * @param {string} next - The next middleware function for error handling.
+   * @returns {Promise<void>} - A promise that resolves when the operation is complete.
+   * @throws {Error} - Throws an error if the snippet does not exist or if there is a database error.
    */
   async show (req, res, next) {
     try {
       const snippetDoc = await Snippet.findById(req.params.id).populate('author', 'username')
-      
       if (!snippetDoc) {
         const error = new Error('The snippet you requested does not exist.')
         error.status = 404
@@ -45,6 +54,11 @@ export class SnippetController {
 
   /**
    * Renders the form to create a new snippet.
+   * @param {object} req - The request object.
+   * @param {object} res - The response object used to render the view.
+   * @param {string} next - The next middleware function for error handling.
+   * @returns {Promise<void>} - A promise that resolves when the operation is complete.
+   * @throws {Error} - Throws an error if there is a database error.
    */
   async create (req, res, next) {
     try {
@@ -56,14 +70,19 @@ export class SnippetController {
 
   /**
    * Processes the snippet creation form (Hardened with PRG and Flash).
+   * @param {object} req - The request object containing form data.
+   * @param {object} res - The response object used for redirection.
+   * @param {string} next - The next middleware function for error handling.
+   * @returns {Promise<void>} - A promise that resolves when the operation is complete.
+   * @throws {Error} - Throws an error if validation fails or if there is a database error.
    */
   async createPost (req, res, next) {
     try {
       const { title, content } = req.body
 
       const snippet = new Snippet({
-        title: title,
-        content: content,
+        title,
+        content,
         author: req.session.user._id
       })
 
@@ -71,8 +90,7 @@ export class SnippetController {
 
       // Flash success and redirect to the public feed
       req.session.flash = { type: 'success', text: 'Snippet successfully created!' }
-      res.redirect('/snippets') 
-
+      res.redirect('/snippets')
     } catch (error) {
       if (error.name === 'ValidationError') {
         req.session.flash = { type: 'danger', text: error.message }
@@ -109,7 +127,7 @@ export class SnippetController {
     } catch (error) {
       if (error.name === 'ValidationError') {
         req.session.flash = { type: 'danger', text: error.message }
-        return res.redirect(`./update`)
+        return res.redirect('./update')
       }
       next(error)
     }

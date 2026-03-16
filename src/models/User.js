@@ -39,6 +39,10 @@ userSchema.pre('save', async function () {
 /**
  * Static method to authenticate a user.
  * Compares a candidate password with the stored hash.
+ * @param {string} username - The username to authenticate.
+ * @param {string} password - The plaintext password to verify.
+ * @returns {Promise<object>} Resolves to the user document if authentication is successful.
+ * @throws {Error} Throws an error if authentication fails.
  */
 userSchema.statics.authenticate = async function (username, password) {
   const user = await this.findOne({ username })

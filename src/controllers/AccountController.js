@@ -38,7 +38,6 @@ export class AccountController {
     try {
       // Authenticate user credentials
       const userDoc = await User.authenticate(req.body.username, req.body.password)
-      
       // Regenerate session to prevent Session Fixation attacks
       req.session.regenerate((err) => {
         if (err) {
@@ -53,7 +52,7 @@ export class AccountController {
 
         // Flash success and redirect
         req.session.flash = { type: 'success', text: `Welcome back, ${userDoc.username}!` }
-        res.redirect('/snippets') 
+        res.redirect('/snippets')
       })
     } catch (error) {
       req.session.flash = { type: 'danger', text: 'Invalid credentials.' }

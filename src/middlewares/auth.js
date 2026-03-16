@@ -11,7 +11,6 @@ export const authorizeLoggedOn = (req, res, next) => {
     error.status = 403
     return next(error)
   }
-  
   // User is authenticated, proceed to the next middleware/controller
   next()
 }
@@ -19,6 +18,11 @@ export const authorizeLoggedOn = (req, res, next) => {
 /**
  * Ownership Middleware
  * Verifies if the logged-in user is the actual creator of the snippet.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ * @param {string} next - The next middleware function.
+ * @returns {Promise<void>} - A promise that resolves when the operation is complete.
+ * @throws {Error} - Throws an error if the snippet does not exist or if the user does not own the snippet.
  */
 export const authorizeOwnership = async (req, res, next) => {
   try {
