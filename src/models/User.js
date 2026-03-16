@@ -39,8 +39,6 @@ userSchema.pre('save', async function () {
 /**
  * Static method to authenticate a user.
  * Compares a candidate password with the stored hash.
- * @param username
- * @param password
  */
 userSchema.statics.authenticate = async function (username, password) {
   const user = await this.findOne({ username })
