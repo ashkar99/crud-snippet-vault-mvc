@@ -7,5 +7,7 @@ import { router as snippetRouter } from './snippetRouter.js'
 
 export const router = express.Router()
 
+router.get('/', (req, res) => res.redirect('/snippets'))
+
 router.use('/', accountRouter)
 router.use('/snippets', snippetRouter)
