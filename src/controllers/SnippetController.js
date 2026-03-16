@@ -7,6 +7,9 @@ import { Snippet } from '../models/Snippet.js'
 export class SnippetController {
   /**
    * Displays a list of all snippets.
+   * @param req
+   * @param res
+   * @param next
    */
   async index (req, res, next) {
     try {
@@ -22,11 +25,14 @@ export class SnippetController {
 
   /**
    * Displays a specific snippet.
+   * @param req
+   * @param res
+   * @param next
    */
   async show (req, res, next) {
     try {
       const snippetDoc = await Snippet.findById(req.params.id).populate('author', 'username')
-      
+
       if (!snippetDoc) {
         const error = new Error('The snippet you requested does not exist.')
         error.status = 404
@@ -45,6 +51,9 @@ export class SnippetController {
 
   /**
    * Renders the form to create a new snippet.
+   * @param req
+   * @param res
+   * @param next
    */
   async create (req, res, next) {
     try {
@@ -56,14 +65,17 @@ export class SnippetController {
 
   /**
    * Processes the snippet creation form (Hardened with PRG and Flash).
+   * @param req
+   * @param res
+   * @param next
    */
   async createPost (req, res, next) {
     try {
       const { title, content } = req.body
 
       const snippet = new Snippet({
-        title: title,
-        content: content,
+        title,
+        content,
         author: req.session.user._id
       })
 
@@ -71,8 +83,7 @@ export class SnippetController {
 
       // Flash success and redirect to the public feed
       req.session.flash = { type: 'success', text: 'Snippet successfully created!' }
-      res.redirect('/snippets') 
-
+      res.redirect('/snippets')
     } catch (error) {
       if (error.name === 'ValidationError') {
         req.session.flash = { type: 'danger', text: error.message }
@@ -109,7 +120,7 @@ export class SnippetController {
     } catch (error) {
       if (error.name === 'ValidationError') {
         req.session.flash = { type: 'danger', text: error.message }
-        return res.redirect(`./update`)
+        return res.redirect('./update')
       }
       next(error)
     }

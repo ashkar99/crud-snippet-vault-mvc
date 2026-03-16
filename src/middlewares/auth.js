@@ -11,7 +11,7 @@ export const authorizeLoggedOn = (req, res, next) => {
     error.status = 403
     return next(error)
   }
-  
+
   // User is authenticated, proceed to the next middleware/controller
   next()
 }
@@ -19,6 +19,9 @@ export const authorizeLoggedOn = (req, res, next) => {
 /**
  * Ownership Middleware
  * Verifies if the logged-in user is the actual creator of the snippet.
+ * @param req
+ * @param res
+ * @param next
  */
 export const authorizeOwnership = async (req, res, next) => {
   try {
