@@ -64,6 +64,11 @@ Start the development server with Nodemon hot-reloading:
 ```bash
 npm run dev
 ```
+
+Or run the server using:
+```bash
+npm start
+```
 Navigate to `http://localhost:3000` in your browser.
 
 
