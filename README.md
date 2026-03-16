@@ -18,19 +18,36 @@ A secure, MVC-architected Node.js web application for creating, managing, and st
 * **Views:** EJS, express-ejs-layouts, Bootstrap 5 (CDN)
 * **Dev Tools:** Docker, Nodemon, ESLint, JSDoc
 
-##  Installation & Setup
+## Installation & Setup
 
-### 1. Prerequisites
-* **Node.js** (v20+ recommended)
-* **Docker Desktop** (for running the local MongoDB instance)
+### Prerequisites
+* **Node.js:** (v20 or higher recommended)
+* **npm:** (Node Package Manager)
+* **Docker Desktop:** (for running the local MongoDB instance)
 
-### 2. Database Initialization
+### 1. Clone the repository
+```bash
+git clone https://github.com/ashkar99/crud-snippet-vault-mvc.git
+cd crud-snippet-vault-mvc
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Setting up the Environment
+
+For detailed instructions on configuring your development environment, please refer to: **[LNU Course Content: HTML, CSS, & JS Dev Tools](https://gitlab.lnu.se/1dv528/course-content/html-css-javascript-dev-tools)**
+
+### 4. Database Initialization
 Spin up a local MongoDB container on port 27017:
 ```bash
 docker run -d -p 27017:27017 --name mongodb mongo:8.2.4
 ```
 
-### 3. Environment Variables
+### 5. Environment Variables
 
 Create a `.env` file in the root directory and configure the following parameters:
 
@@ -40,13 +57,8 @@ SESSION_SECRET="generate_a_very_long_random_string_here"
 PORT=3000
 ```
 
-### 4. Install Dependencies
+### 6. Boot the Server
 
-```bash
-npm install
-```
-
-### 5. Boot the Server
 Start the development server with Nodemon hot-reloading:
 
 ```bash
@@ -63,3 +75,6 @@ Navigate to `http://localhost:3000` in your browser.
 | `npm start` | Starts the server using standard Node (Production mode). |
 | `npm run lint` | Runs ESLint, Stylelint, and HTMLHint to audit code quality. |
 | `npm run eslint:fix` | Auto-formats code to comply with Standard JS rules. |
+
+## License
+This project is licensed under the MIT License, see [LICENSE](LICENSE) for details.
